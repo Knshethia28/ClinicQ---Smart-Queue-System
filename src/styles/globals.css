@@ -1,0 +1,454 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-size: 14px;
+  --background: hsl(210 40% 98%);
+  --foreground: hsl(222 47% 11%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222 47% 11%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222 47% 11%);
+  --primary: hsl(175 84% 32%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(215 25% 27%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(210 40% 96.1%);
+  --accent-foreground: hsl(222.2 47.4% 11.2%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --input-background: hsl(210 40% 98%);
+  --switch-background: hsl(215 20.2% 65.1%);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: hsl(175 84% 32%);
+  --chart-1: hsl(12 76% 61%);
+  --chart-2: hsl(173 58% 39%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
+  --radius: 0.75rem;
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(222 47% 11%);
+  --sidebar-primary: hsl(175 84% 32%);
+  --sidebar-primary-foreground: hsl(210 40% 98%);
+  --sidebar-accent: hsl(210 40% 96.1%);
+  --sidebar-accent-foreground: hsl(222 47% 11%);
+  --sidebar-border: hsl(214.3 31.8% 91.4%);
+  --sidebar-ring: hsl(175 84% 32%);
+}
+
+.dark {
+  --background: hsl(222.2 47.4% 5.9%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222.2 84% 4.9%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222.2 84% 4.9%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(175 84% 42%);
+  --primary-foreground: hsl(222.2 47.4% 11.2%);
+  --secondary: hsl(217.2 32.6% 17.5%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+  --accent: hsl(217.2 32.6% 17.5%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --input-background: hsl(217.2 32.6% 17.5%);
+  --switch-background: hsl(215 25% 27%);
+  --ring: hsl(175 84% 42%);
+  --chart-1: hsl(220 70% 50%);
+  --chart-2: hsl(160 60% 45%);
+  --chart-3: hsl(30 80% 55%);
+  --chart-4: hsl(280 65% 60%);
+  --chart-5: hsl(340 75% 55%);
+  --sidebar: hsl(222.2 84% 4.9%);
+  --sidebar-foreground: hsl(210 40% 98%);
+  --sidebar-primary: hsl(175 84% 42%);
+  --sidebar-primary-foreground: hsl(222.2 47.4% 11.2%);
+  --sidebar-accent: hsl(217.2 32.6% 17.5%);
+  --sidebar-accent-foreground: hsl(210 40% 98%);
+  --sidebar-border: hsl(217.2 32.6% 17.5%);
+  --sidebar-ring: hsl(175 84% 42%);
+}
+
+@theme inline {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    @apply font-heading;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Custom Component Classes */
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/40 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/5;
+  }
+  .glass-card {
+    @apply bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)] transition-all duration-500 rounded-2xl;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .glass-premium {
+    @apply bg-white/60 dark:bg-black/60 backdrop-blur-3xl border border-white/40 dark:border-white/10 shadow-xl rounded-3xl;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 20px 40px -10px rgba(0,0,0,0.05);
+  }
+
+  /* Header Styles */
+  .clinic-header {
+    @apply fixed top-0 left-0 right-0 z-40 bg-card border-b border-border px-6 py-4;
+  }
+
+  /* Sidebar Styles */
+  .clinic-sidebar {
+    @apply fixed left-0 top-16 bottom-0 w-64 bg-card border-r border-border overflow-y-auto;
+  }
+
+  /* Main Content Area */
+  .clinic-main {
+    @apply flex-1 ml-64 p-6 overflow-y-auto;
+  }
+
+  /* Stats Card */
+  .stats-card-content {
+    @apply flex items-center justify-between;
+  }
+
+  .stats-icon-wrapper {
+    @apply p-3 rounded-lg;
+  }
+
+  /* Patient Card */
+  .patient-card {
+    @apply flex items-center justify-between p-4 bg-background hover:bg-muted/50 border-b border-border last:border-b-0;
+  }
+
+  .patient-info {
+    @apply flex items-center space-x-4;
+  }
+
+  /* Current Patient Card */
+  .current-patient-card {
+    @apply border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950;
+  }
+
+  /* Avatar Styles */
+  .avatar-initials {
+    @apply w-10 h-10 bg-muted rounded-full flex items-center justify-center;
+  }
+
+  /* Queue Number Badge */
+  .queue-number {
+    @apply w-8 h-8 bg-muted rounded-full flex items-center justify-center text-sm font-medium;
+  }
+
+  /* Clinic Status Indicators */
+  .status-open {
+    @apply bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300;
+  }
+
+  .status-busy {
+    @apply bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300;
+  }
+
+  .status-closed {
+    @apply bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300;
+  }
+
+  /* Gradient Banner */
+  .gradient-banner {
+    @apply bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-8 rounded-lg;
+  }
+
+  /* Quick Action Button */
+  .quick-action-btn {
+    @apply h-24 flex flex-col items-start justify-center border-2;
+  }
+
+  /* Drag Handle */
+  .drag-handle {
+    @apply cursor-grab active:cursor-grabbing;
+  }
+
+  /* Login Container */
+  .login-container {
+    @apply min-h-screen bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 flex items-center justify-center p-4;
+  }
+
+  /* Alert Box */
+  .alert-box {
+    @apply p-4 rounded-lg border;
+  }
+
+  .alert-info {
+    @apply bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-800;
+  }
+
+  .alert-success {
+    @apply bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800;
+  }
+
+  /* Tab Button Active State */
+  .tab-active {
+    @apply bg-teal-600 hover:bg-teal-700 text-white;
+  }
+
+  /* Clinic Card */
+  .clinic-card {
+    @apply p-4 border-2 border-border rounded-lg hover:border-teal-400 hover:shadow-md transition-all cursor-pointer;
+  }
+
+  .clinic-card-favorite {
+    @apply border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950;
+  }
+
+  /* Filter Button */
+  .filter-btn {
+    @apply px-4 py-2 rounded-full border-2 transition-all;
+  }
+
+  .filter-btn-active {
+    @apply bg-teal-600 border-teal-600 text-white;
+  }
+
+  .filter-btn-inactive {
+    @apply border-border hover:border-teal-400;
+  }
+
+  /* Empty State */
+  .empty-state {
+    @apply p-8 text-center text-muted-foreground;
+  }
+
+  /* Loading Spinner */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .spinner {
+    @apply animate-spin;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Notification Badge */
+  .notification-badge {
+    @apply absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs;
+  }
+
+  /* Theme Toggle */
+  .theme-card {
+    @apply p-4 border-2 rounded-lg cursor-pointer transition-all;
+  }
+
+  .theme-card-active {
+    @apply border-teal-600 bg-teal-50 dark:bg-teal-950;
+  }
+
+  .theme-card-inactive {
+    @apply border-border hover:border-teal-400;
+  }
+}
+
+/* Custom Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-mesh {
+    background: linear-gradient(-45deg, #0f766e, #14b8a6, #0ea5e9, #6366f1);
+    background-size: 400% 400%;
+    animation: meshGradient 15s ease infinite;
+  }
+
+  @keyframes meshGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 active:scale-95;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-teal-500/20 rounded-full hover:bg-teal-500/40 transition-colors;
+  }
+}

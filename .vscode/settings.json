@@ -1,0 +1,9 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^node -e \"\\(async\\(\\)=>\\{try\\{const r=await fetch\\('http://localhost:5001/api/health'\\);console\\.log\\('status',r\\.status\\);console\\.log\\(await r\\.text\\(\\)\\);\\}catch\\(e\\)\\{console\\.error\\('ERR',e\\.message\\);process\\.exit\\(1\\);\\}\\}\\)\\(\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    },
+    "css.lint.unknownAtRules": "ignore"
+}
