@@ -366,7 +366,7 @@ All endpoints are prefixed with `/api`.
 | `availabilityStart` | String | Start time (`HH:MM`) |
 | `availabilityEnd` | String | End time (`HH:MM`) |
 | `lunchStart` / `lunchEnd` | String | Lunch break window |
-| `workingDays` | [String] | `['Mon','Tue',...]` |
+| `workingDays` | [String] | `["Mon","Tue",...]` |
 | `slotCapacity` | Number | Patients per slot |
 
 ### Slot
