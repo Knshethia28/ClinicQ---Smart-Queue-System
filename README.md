@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 🏥 ClinicQ
 
@@ -36,58 +36,62 @@ A full-stack healthcare queue management system that connects patient discovery,
 
 ## 🔍 Overview
 
-ClinicQ is a comprehensive patient-flow operating system designed for clinics and hospitals. It provides two distinct dashboard experiences — one for **clinic administrators** (doctors, staff) and one for **patients** — connected by a real-time WebSocket-powered queue engine.
+ClinicQ is a comprehensive patient-flow operating system for clinics and hospitals. It provides two distinct dashboard experiences—one for **clinic administrators** (doctors, staff) and one for **patients**—connected by a real-time, WebSocket-powered queue engine.
 
-The platform allows clinics to manage doctors, configure appointment slots, run a live queue with walk-in and emergency support, and lets patients discover nearby clinics, book appointments, and track their position in the queue in real time.
+The platform helps clinics manage doctors, configure appointment slots, run a live queue with walk-in and emergency support, and allows patients to discover nearby clinics, book appointments, and track queue position in real time.
 
 ---
 
 ## ✨ Features
 
 ### 🩺 Clinic Dashboard
-- **Doctor Management** — Add, edit, and remove doctors with specialization, working hours, lunch breaks, and working days
-- **Slot Generation** — Auto-generate time slots per doctor based on configurable duration and capacity
-- **Live Queue Engine** — Real-time patient queue with token assignment (`T-001`, `T-002`, …)
-- **Walk-in Support** — Add walk-in patients directly to the queue
-- **Emergency Triage** — Emergency walk-ins are auto-promoted to the front of the queue
-- **Queue Reordering** — Drag-and-drop manual queue reorder with position persistence
-- **Call Next / Complete** — One-click patient flow through `booked → active → completed`
-- **Queue Statistics** — Live stats: waiting count, active patient, completed today, average consultation time
-- **ETA Estimation** — Per-patient estimated wait time range based on historical consultation duration
+
+- **Doctor Management** — Add, edit, and remove doctors with specialization, working hours, lunch breaks, and working days.
+- **Slot Generation** — Auto-generate time slots per doctor based on configurable duration and capacity.
+- **Live Queue Engine** — Real-time patient queue with token assignment (`T-001`, `T-002`, …).
+- **Walk-in Support** — Add walk-in patients directly to the queue.
+- **Emergency Triage** — Emergency walk-ins are auto-promoted to the front of the queue.
+- **Queue Reordering** — Drag-and-drop manual queue reorder with position persistence.
+- **Call Next / Complete** — One-click patient flow through `booked → active → completed`.
+- **Queue Statistics** — Live stats: waiting count, active patient, completed today, average consultation time.
+- **ETA Estimation** — Estimated wait-time range per patient based on historical consultation duration.
 
 ### 👤 Patient Dashboard
-- **Nearby Clinic Discovery** — Geolocation-based search powered by multiple providers:
+
+- **Nearby Clinic Discovery** — Geolocation-based search powered by:
   - Google Places API
   - OpenStreetMap Overpass API
   - Nominatim geocoding
   - Geoapify Places API
-- **Appointment Booking** — Browse available slots for a doctor and book appointments
-- **Real-Time Queue Tracking** — Live position and wait-time updates via WebSocket
-- **Clinic Favorites** — Save frequently visited clinics for quick access
+- **Appointment Booking** — Browse available slots for a doctor and book appointments.
+- **Real-Time Queue Tracking** — Live position and wait-time updates via WebSocket.
+- **Clinic Favorites** — Save frequently visited clinics for quick access.
 
 ### 🔐 Authentication
+
 - JWT-based authentication with role separation (`clinic` / `patient`)
 - Secure password hashing with bcrypt
 - Persistent login state via `localStorage`
 
 ### 🎨 UI & Design
-- Premium "Elegant Health" dark-mode UI with glassmorphism, mesh gradients, and micro-animations
-- Typography powered by **Inter** and **Outfit** from Google Fonts
-- Radix UI primitives for accessible, composable components (dialogs, dropdowns, tabs, tooltips, etc.)
-- Recharts-powered data visualizations
-- Fully responsive layout
+
+- Premium “Elegant Health” dark-mode UI with glassmorphism, mesh gradients, and micro-animations.
+- Typography powered by **Inter** and **Outfit** from Google Fonts.
+- Radix UI primitives for accessible, composable components.
+- Recharts-powered data visualizations.
+- Fully responsive layout.
 
 ---
 
 ## 🏗 Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────┐
 │                    Client (React)                   │
 │                                                     │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────┐ │
-│  │  Login /      │  │   Clinic     │  │  Patient  │ │
-│  │  Sign Up      │  │  Dashboard   │  │ Dashboard │ │
+│  │  Login /     │  │   Clinic     │  │  Patient  │ │
+│  │  Sign Up     │  │  Dashboard   │  │ Dashboard │ │
 │  └──────────────┘  └──────┬───────┘  └─────┬─────┘ │
 │                           │                │        │
 │            REST API ──────┴────────────────┘        │
@@ -95,34 +99,36 @@ The platform allows clinics to manage doctors, configure appointment slots, run 
 └───────────────────────────┬─────────────────────────┘
                             │
 ┌───────────────────────────▼─────────────────────────┐
-│                 Server (Express.js)                  │
-│                                                      │
+│                 Server (Express.js)                 │
+│                                                     │
 │  ┌──────────┐ ┌───────────┐ ┌─────────────────────┐ │
-│  │  Routes   │ │Controllers│ │     Services        │ │
-│  │          │→│           │→│  • queueService      │ │
-│  │ /auth    │ │ auth      │ │  • slotService       │ │
-│  │ /clinics │ │ clinic    │ │  • discoveryService  │ │
-│  │ /doctors │ │ doctor    │ └─────────────────────┘ │
-│  │ /slots   │ │ slot      │                         │
-│  │ /appts   │ │ appt      │ ┌─────────────────────┐ │
-│  │ /queue   │ │ queue     │ │   Middleware         │ │
-│  └──────────┘ └───────────┘ │  • JWT auth          │ │
-│                             │  • Rate limiting     │ │
-│  ┌──────────────────┐       │  • CORS / Helmet     │ │
-│  │ Socket.IO Server │       │  • Error handling    │ │
-│  │  (queueSocket)   │       └─────────────────────┘ │
-│  └──────────────────┘                                │
-└───────────────────────────┬──────────────────────────┘
+│  │ Routes   │ │Controllers│ │ Services            │ │
+│  │ /auth    │→│ auth      │→│ • queueService      │ │
+│  │ /clinics │ │ clinic    │ │ • slotService       │ │
+│  │ /doctors │ │ doctor    │ │ • discoveryService  │ │
+│  │ /slots   │ │ slot      │ └─────────────────────┘ │
+│  │ /appts   │ │ appt      │                         │
+│  │ /queue   │ │ queue     │ ┌─────────────────────┐ │
+│  └──────────┘ └───────────┘ │ Middleware          │ │
+│                             │ • JWT auth          │ │
+│                             │ • Rate limiting     │ │
+│                             │ • CORS / Helmet     │ │
+│                             │ • Error handling    │ │
+│                             └─────────────────────┘ │
+│  ┌──────────────────┐                               │
+│  │ Socket.IO Server │                               │
+│  │  (queueSocket)   │                               │
+│  └──────────────────┘                               │
+└───────────────────────────┬─────────────────────────┘
                             │
-                 ┌──────────▼──────────┐
-                 │    MongoDB Atlas    │
-                 │                     │
-                 │  • Users            │
-                 │  • Clinics          │
-                 │  • Doctors          │
-                 │  • Slots            │
-                 │  • Appointments     │
-                 └─────────────────────┘
+                  ┌─────────▼─────────┐
+                  │   MongoDB Atlas   │
+                  │ • Users           │
+                  │ • Clinics         │
+                  │ • Doctors         │
+                  │ • Slots           │
+                  │ • Appointments    │
+                  └───────────────────┘
 ```
 
 ---
@@ -130,8 +136,9 @@ The platform allows clinics to manage doctors, configure appointment slots, run 
 ## 🛠 Tech Stack
 
 ### Frontend
+
 | Technology | Purpose |
-|---|---|
+| --- | --- |
 | **React 18** | Component library |
 | **TypeScript 6** | Type safety |
 | **Vite 6** | Build tool & dev server |
@@ -145,8 +152,9 @@ The platform allows clinics to manage doctors, configure appointment slots, run 
 | **@dnd-kit** | Drag-and-drop queue reordering |
 
 ### Backend
+
 | Technology | Purpose |
-|---|---|
+| --- | --- |
 | **Node.js** | Runtime |
 | **Express 4** | HTTP framework |
 | **Mongoose 8** | MongoDB ODM |
@@ -170,8 +178,8 @@ The platform allows clinics to manage doctors, configure appointment slots, run 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/ClinicQ.git
-cd ClinicQ
+git clone https://github.com/Knshethia28/ClinicQ---Smart-Queue-System.git
+cd ClinicQ---Smart-Queue-System
 ```
 
 ### 2. Set up the backend
@@ -192,19 +200,19 @@ npm run seed
 ### 4. Start the backend
 
 ```bash
-# Development (with hot-reload via nodemon)
+# Development (hot reload via nodemon)
 npm run dev
 
 # Production
 npm start
 ```
 
-The server will start on **port 5000** by default (auto-increments if the port is in use).
+The backend runs on **port 5000** by default (auto-increments if the port is in use).
 
 ### 5. Set up the frontend
 
 ```bash
-cd ..   # back to project root
+cd ..
 cp .env.example .env
 # Ensure VITE_API_BASE_URL points to your backend (default: http://localhost:5000)
 npm install
@@ -216,7 +224,7 @@ npm install
 npm run dev
 ```
 
-The app will open at **http://localhost:3000**.
+The frontend runs at **http://localhost:3000**.
 
 ### 7. Build for production
 
@@ -233,13 +241,13 @@ Output is written to the `build/` directory.
 ### Frontend (`/.env`)
 
 | Variable | Description | Default |
-|---|---|---|
+| --- | --- | --- |
 | `VITE_API_BASE_URL` | Backend API base URL | `http://localhost:5000` |
 
 ### Backend (`/server/.env`)
 
 | Variable | Description | Default |
-|---|---|---|
+| --- | --- | --- |
 | `NODE_ENV` | Environment (`development` / `production`) | `development` |
 | `MONGO_URI` | MongoDB connection string | — |
 | `JWT_SECRET` | Secret key for JWT signing | — |
@@ -247,8 +255,8 @@ Output is written to the `build/` directory.
 | `CLIENT_ORIGIN` | Allowed CORS origins (comma-separated) | `http://localhost:3000` |
 | `RATE_LIMIT_WINDOW_MS` | Rate limit window in ms | `900000` (15 min) |
 | `RATE_LIMIT_MAX` | Max requests per window | `300` |
-| `GOOGLE_PLACES_API_KEY` | Google Places API key (for clinic discovery) | — |
-| `GEOAPIFY_API_KEY` | Geoapify API key (for clinic discovery) | — |
+| `GOOGLE_PLACES_API_KEY` | Google Places API key (clinic discovery) | — |
+| `GEOAPIFY_API_KEY` | Geoapify API key (clinic discovery) | — |
 
 ---
 
@@ -259,28 +267,28 @@ All endpoints are prefixed with `/api`.
 ### Health & Readiness
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/health` | Basic health check |
 | `GET` | `/api/ready` | Health check with DB status |
 
 ### Authentication (`/api/auth`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `POST` | `/api/auth/login` | Authenticate user |
 | `POST` | `/api/auth/signup` | Register a new user (clinic or patient) |
 
 ### Clinics (`/api/clinics`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/clinics` | List clinics |
 | `GET` | `/api/clinics/nearby` | Discover nearby clinics (geolocation-based) |
 
 ### Doctors (`/api/doctors`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/doctors` | List doctors (filtered by clinic) |
 | `POST` | `/api/doctors` | Create a doctor |
 | `PUT` | `/api/doctors/:id` | Update a doctor |
@@ -289,14 +297,14 @@ All endpoints are prefixed with `/api`.
 ### Slots (`/api/slots`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/slots` | List slots for a doctor |
 | `POST` | `/api/slots/generate` | Auto-generate slots from doctor availability |
 
 ### Appointments (`/api/appointments`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/appointments` | List appointments |
 | `POST` | `/api/appointments` | Book an appointment |
 | `PATCH` | `/api/appointments/:id` | Update appointment status |
@@ -305,7 +313,7 @@ All endpoints are prefixed with `/api`.
 ### Queue (`/api/queue`)
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/api/queue/:doctorId` | Get live queue for a doctor |
 | `POST` | `/api/queue/:doctorId/walk-in` | Add a walk-in patient |
 | `POST` | `/api/queue/:doctorId/call-next` | Call the next patient |
@@ -315,7 +323,7 @@ All endpoints are prefixed with `/api`.
 ### WebSocket Events
 
 | Event | Direction | Description |
-|---|---|---|
+| --- | --- | --- |
 | `joinDoctorQueue` | Client → Server | Subscribe to queue updates for a doctor |
 | `queueUpdated` | Server → Client | Broadcast when the queue changes |
 
@@ -324,8 +332,9 @@ All endpoints are prefixed with `/api`.
 ## 📊 Data Models
 
 ### User
+
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `username` | String | Unique login name |
 | `email` | String | User email |
 | `passwordHash` | String | Bcrypt hash |
@@ -337,8 +346,9 @@ All endpoints are prefixed with `/api`.
 | `phone` | String | Patient phone |
 
 ### Clinic
+
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `name` | String | Clinic name |
 | `address` | String | Physical address |
 | `location` | GeoJSON Point | `[lng, lat]` coordinates (2dsphere indexed) |
@@ -346,8 +356,9 @@ All endpoints are prefixed with `/api`.
 | `facilityType` | Enum | `clinic` or `hospital` |
 
 ### Doctor
+
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `clinicId` | ObjectId | Parent clinic |
 | `name` | String | Doctor name |
 | `specialization` | String | Medical specialty |
@@ -355,12 +366,13 @@ All endpoints are prefixed with `/api`.
 | `availabilityStart` | String | Start time (`HH:MM`) |
 | `availabilityEnd` | String | End time (`HH:MM`) |
 | `lunchStart` / `lunchEnd` | String | Lunch break window |
-| `workingDays` | [String] | `["Mon","Tue",...]` |
+| `workingDays` | [String] | `['Mon','Tue',...]` |
 | `slotCapacity` | Number | Patients per slot |
 
 ### Slot
+
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `doctorId` | ObjectId | Parent doctor |
 | `date` | String | `YYYY-MM-DD` |
 | `startTime` / `endTime` | String | `HH:MM` |
@@ -368,12 +380,13 @@ All endpoints are prefixed with `/api`.
 | `bookedCount` | Number | Current bookings |
 
 ### Appointment
+
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `patientName` | String | Patient display name |
 | `phone` | String | Contact number |
 | `doctorId` | ObjectId | Assigned doctor |
-| `slotId` | ObjectId | Booked slot (null for walk-ins) |
+| `slotId` | ObjectId | Booked slot (`null` for walk-ins) |
 | `isEmergency` | Boolean | Emergency flag |
 | `status` | Enum | `booked` → `active` → `completed` / `cancelled` |
 | `manualQueuePosition` | Number | Manual reorder position |
@@ -384,7 +397,7 @@ All endpoints are prefixed with `/api`.
 
 ## 📂 Project Structure
 
-```
+```text
 ClinicQ/
 ├── index.html                      # App entry point
 ├── package.json                    # Frontend dependencies & scripts
@@ -469,7 +482,7 @@ ClinicQ/
 ## 🔑 Demo Credentials
 
 | Role | Username | Password |
-|---|---|---|
+| --- | --- | --- |
 | Clinic Admin | `clinic` | `clinic123` |
 | Patient | `patient1` | `patient123` |
 
@@ -484,4 +497,3 @@ This project is private and not currently licensed for public distribution.
 <div align="center">
   <sub>Built with ❤️ for better healthcare experiences</sub>
 </div>
-]]>
