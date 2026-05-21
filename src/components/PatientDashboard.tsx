@@ -1839,35 +1839,53 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
 
                   <div>
                     <h4 className="font-semibold mb-3">Available Slots</h4>
-                    {isLoadingSlots ? (
-                      <p className="text-sm text-muted-foreground">Loading slots...</p>
-                    ) : availableSlots.length === 0 ? (
-                      <p className="text-sm text-muted-foreground">No slots available for selected date.</p>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                        {availableSlots.map((slot) => {
-                          const isAvailable = slot.bookedCount < slot.capacity;
-                          const label = `${to12HourTime(slot.startTime)}-${to12HourTime(slot.endTime)}`;
+                    {(() => {
+                      // Filter out slots whose start time has already passed when viewing today's date
+                      const isToday = selectedDate === getLocalYmd();
+                      const visibleSlots = isToday
+                        ? availableSlots.filter((slot) => {
+                            const now = new Date();
+                            const [slotHour, slotMinute] = slot.startTime.split(':').map(Number);
+                            const slotDate = new Date();
+                            slotDate.setHours(slotHour, slotMinute, 0, 0);
+                            return slotDate > now;
+                          })
+                        : availableSlots;
 
-                          return (
-                            <button
-                              key={slot.id}
-                              disabled={!isAvailable}
-                              onClick={() => setSelectedSlotId(slot.id)}
-                              className={`p-2 rounded-lg text-sm font-medium border-2 transition-all ${!isAvailable
-                                  ? 'bg-gray-100 border-gray-200 text-gray-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500 cursor-not-allowed'
-                                  : selectedSlotId === slot.id
-                                    ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                                    : 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400 cursor-pointer'
-                                }`}
-                            >
-                              <div>{label}</div>
-                              <div className="text-[10px] mt-1">{slot.capacity - slot.bookedCount} left</div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
+                      return isLoadingSlots ? (
+                        <p className="text-sm text-muted-foreground">Loading slots...</p>
+                      ) : visibleSlots.length === 0 ? (
+                        <p className="text-sm text-muted-foreground">
+                          {isToday && availableSlots.length > 0
+                            ? 'All slots for today have passed. Please select a future date.'
+                            : 'No slots available for selected date.'}
+                        </p>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                          {visibleSlots.map((slot) => {
+                            const isAvailable = slot.bookedCount < slot.capacity;
+                            const label = `${to12HourTime(slot.startTime)}-${to12HourTime(slot.endTime)}`;
+
+                            return (
+                              <button
+                                key={slot.id}
+                                disabled={!isAvailable}
+                                onClick={() => setSelectedSlotId(slot.id)}
+                                className={`p-2 rounded-lg text-sm font-medium border-2 transition-all ${!isAvailable
+                                    ? 'bg-gray-100 border-gray-200 text-gray-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500 cursor-not-allowed'
+                                    : selectedSlotId === slot.id
+                                      ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                      : 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400 cursor-pointer'
+                                  }`}
+                              >
+                                <div>{label}</div>
+                                <div className="text-[10px] mt-1">{slot.capacity - slot.bookedCount} left</div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {selectedSlotId && (
